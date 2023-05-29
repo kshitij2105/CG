@@ -1,0 +1,15 @@
+Sudo su hduser
+Password
+$ cd
+$ cd /use/local/hadoop
+$ start-dfs.sh
+$ star-yarn.sh
+$ Jps
+$ bin/hdfs dfs -mkdir /user215/
+$ bin/hdfs dfs -put /home/student/Desktop/data
+/user215/input
+Computer ->home -> student -> Desktop -> data -> user215 -> input
+Make a input.txt file here and put some words in it
+bin/hadoop jar share/hadoop-mapreduce-exaples- 2.9.0.jar wordcount /user215/input output215
+bin/hdfs dfs -cat output215/*
+stop-all.sh

@@ -1,0 +1,51 @@
+Problem Statement : Write an application using HiveQL for flight
+information system which will include a. Creating, Dropping, and altering
+Database tables. b. Creating an external Hive table. c. Load table with
+data, insert new values and field in the table, Join tables with Hive d.
+Create index on Flight Information Table e. Find the average departure
+delay per day in 2008.
+
+PART-A
+1)sudo su hduser
+2)cd /usr/local/hive/bin
+3)start-dfs.sh
+4)start-yarn.sh
+5)./hive
+6)show databases;
+7)create database db1;
+8)create table cust(cname string, csal int) row format delimited fields terminated by ',' stored as 
+textfile;
+9)load data local inpath '/home/student/Desktop/cust.txt' into table cust;
+10)insert into table cust values ('shilpa', '65000');
+11)ALTER TABLE cust ADD COLUMNS (dept string);
+12)drop table cust;
+
+PART-B
+13)CREATE EXTERNAL TABLE external_table_name (
+    column1 data_type,
+    column2 data_type,
+    ...
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+LOCATION '/path/to/external/table';
+
+PART-C,D
+FLIGHT INFORMATION SYSTEM:
+
+1)  select * from flightinfo;
+2)  load data local inpath '/home/student/student/Desktop/finfo.txt' into table flightinfo;
+3)  select * from flightinfo;
+4)  desc flightinfo;
+5)  select * from flightinfo where dept=65000;
+6)  load data local inpath '/home/student/student/Desktop/schedule.txt' into table schedule;
+7)  SELECT * FROM SCHEDULE;
+8)  SELECT s.sname,COUNT(*) AS num_flights FROM flightinfo f JOIN schedule s ON scheduleid=s.scheduleid GROUP BY s.sname;
+9)  select fname,fnumber,dcity,decity,dtime,dept from flightinfo f join schedule s on(scheduleid=s.scheduleid);
+10) CREATE INDEX idx ON TABLE schedule(dat) AS 'org.apache.hadoop.hive.ql.index.compact.CompactIndexHandler' WITH DEFERRED REBUILD;
+11) select count(dat), dat from schedule group by dat;
+12) show formatted index on flightinfo;
+13) select avg(dtime) from flightinfo;
+14) select avg(dtime) from flightinfo;
+
+
