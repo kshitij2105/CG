@@ -6,10 +6,92 @@ $ start-dfs.sh
 $ star-yarn.sh
 $ Jps
 $ bin/hdfs dfs -mkdir /user215/
-$ bin/hdfs dfs -put /home/student/Desktop/data
-/user215/input
+$ bin/hdfs dfs -put /home/student/Desktop/data /user215/input
 Computer ->home -> student -> Desktop -> data -> user215 -> input
 Make a input.txt file here and put some words in it
-bin/hadoop jar share/hadoop-mapreduce-exaples- 2.9.0.jar wordcount /user215/input output215
+bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples- 2.9.0.jar wordcount /user215/input output215
 bin/hdfs dfs -cat output215/*
 stop-all.sh
+---------------------------------
+Hadoop
+HDFS stands for Hadoop Distributed File System. It is a distributed file system designed to store and manage large amounts of data across multiple machines in a Hadoop cluster. HDFS is a key component of the Apache Hadoop ecosystem and is optimized for handling big data workloads.
+
+Here are some key characteristics and concepts related to HDFS:
+
+Distributed Storage: HDFS stores data across a cluster of machines, distributing the data blocks across multiple nodes. This distribution enables scalability, fault tolerance, and high throughput for data-intensive applications.
+
+Fault Tolerance: HDFS ensures fault tolerance by replicating data blocks across multiple machines. By default, each data block is replicated three times across different nodes, providing redundancy and resilience against node failures.
+
+High Throughput: HDFS is designed for high-throughput data access, particularly for large files. It achieves high throughput by allowing parallel data access across multiple nodes and optimizing data locality.
+
+Data Blocks: HDFS breaks files into fixed-size data blocks (typically 128 MB or 256 MB) and distributes these blocks across the cluster. Each data block is independently replicated and managed.
+
+NameNode and DataNodes: HDFS has a master-slave architecture. The NameNode is the central metadata repository that manages file system metadata, such as file hierarchy, permissions, and block locations. DataNodes are worker nodes that store the actual data blocks and communicate with the NameNode.
+
+Data Locality: HDFS aims to maximize data locality by placing data blocks on nodes where the computation is likely to occur. This reduces network traffic and improves overall performance by minimizing data transfer across the network.
+
+Stream Processing: HDFS is optimized for sequential data access patterns, making it suitable for batch processing and stream processing frameworks, such as Apache Spark and Apache Flink.
+
+----------------------
+Resource Manager:
+
+The Resource Manager is a component of Apache Hadoop YARN (Yet Another Resource Negotiator), which is responsible for managing resources in a Hadoop cluster.
+It acts as a central authority for resource allocation and scheduling of applications running on the cluster.
+The Resource Manager keeps track of available resources (CPU, memory) on each node in the cluster and assigns them to applications based on their resource requirements.
+It also monitors the health and status of NodeManagers in the cluster.
+SecondaryNameNode:
+
+The SecondaryNameNode is not actually a backup or secondary NameNode as the name might suggest.
+It assists the primary NameNode in performing periodic checkpoints of the file system metadata.
+It merges the edits made to the file system since the last checkpoint with the existing checkpoint, reducing the startup time of the NameNode in case of failure.
+The SecondaryNameNode does not provide failover capability or redundancy for the NameNode.
+DataNode:
+
+DataNodes are responsible for storing and managing the actual data blocks of files in Hadoop Distributed File System (HDFS).
+They receive instructions from the NameNode to store or retrieve data blocks and handle read/write requests from clients.
+DataNodes are distributed across the cluster and store data redundantly to ensure fault tolerance.
+They report their health and status to the NameNode and participate in the block replication process.
+NodeManager:
+
+The NodeManager is a component of Apache Hadoop YARN.
+It runs on each machine (node) in the cluster and is responsible for managing resources (CPU, memory) on that node.
+NodeManager communicates with the Resource Manager to request and release resources for running containers.
+It monitors the resource usage, health, and status of containers running on the node and reports this information to the Resource Manager.
+NameNode:
+
+The NameNode is the central component of Hadoop Distributed File System (HDFS).
+It maintains the metadata of the file system, including file and directory structure, permissions, and locations of data blocks.
+The NameNode handles client requests for file operations such as read, write, and delete.
+It manages the allocation and replication of data blocks across DataNodes.
+The NameNode is critical to the availability and reliability of the Hadoop cluster, and its failure can cause the entire cluster to become inaccessible.
+jps:
+
+jps is a command-line tool that stands for "Java Virtual Machine Process Status".
+It is used to display the list of Java processes running on a machine.
+When executed, jps shows the Process ID (PID) and the name of each Java process running, including Hadoop-related processes like NameNode, DataNode, ResourceManager, etc.
+It is useful for checking the status of Java processes in a Hadoop cluster and troubleshooting any issues.
+
+----------------------------
+NameNode:
+
+Think of the NameNode as the boss or manager of HDFS.
+The NameNode is the master node in HDFS and acts as the central point of control and coordination.
+It manages the file system namespace and metadata,
+It keeps track of all the important information about files, like where they are stored, who can access them, and how they are organized.
+The NameNode tells the other nodes where to find the data blocks of files.
+It handles requests from users or applications to perform actions like opening, closing, or renaming files.
+The failure of the NameNode can render the HDFS cluster unavailable, so it is critical for high availability to configure a standby NameNode
+
+DataNode:
+
+DataNodes are the workers or employees in HDFS.
+They store the actual data blocks of files.
+DataNodes follow instructions from the NameNode and perform tasks like reading and writing data.
+They store multiple copies of the data blocks to ensure that if one DataNode fails, the data is still available.
+
+SecondaryNameNode:
+
+The SecondaryNameNode is like the assistant to the NameNode.
+It helps the NameNode by regularly taking snapshots of the important information.
+These snapshots, called checkpoints, make it faster for the NameNode to start up again if there is a problem.
+The SecondaryNameNode merges the recent changes with the saved snapshots to create a new checkpoint.
